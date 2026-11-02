@@ -1,0 +1,2024 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Birthday Surprise ♡</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&display=swap');
+
+:root {
+  --paper: #fffefb;
+  --orange: #ed613e;
+  --red: #a84335;
+  --pink: #f4cbd3;
+  --ink: #493a32;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: #f4eee9;
+  font-family: 'Baloo 2', 'Trebuchet MS', sans-serif;
+  color: var(--ink);
+}
+
+button { font: inherit; }
+
+.stage {
+  width: min(100%, 900px);
+  min-height: 510px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 10% 15%, #f8e9e8 0, transparent 24%),
+    radial-gradient(ellipse at 90% 85%, #f7e7d9 0, transparent 25%),
+    var(--paper);
+  border: 1px solid #e9ddd1;
+  box-shadow: 0 8px 28px #72574718;
+  isolation: isolate;
+}
+
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px solid #f2e9df;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.screen {
+  min-height: 510px;
+  width: 100%;
+  padding: 34px clamp(18px, 5vw, 55px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  animation: fadeIn .6s ease both;
+}
+
+.hidden { display: none !important; }
+/* Back button on every screen */
+.back-btn {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 10;
+
+  padding: 7px 16px;
+  border: 1px solid #ed613e;
+  border-radius: 20px;
+
+  background: #fffefb;
+  color: #ed613e;
+
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: background 0.2s, transform 0.2s;
+}
+
+.back-btn:hover {
+  background: #fff0e9;
+  transform: translateX(-3px);
+}
+
+h1, h2, p { margin-top: 0; }
+
+h1 {
+  margin-bottom: 12px;
+  font-size: clamp(29px, 5vw, 48px);
+  line-height: 1.08;
+  font-weight: 800;
+  color: #a64a3d;
+}
+
+h2 {
+  font-size: clamp(25px, 4vw, 37px);
+  line-height: 1.15;
+  color: #ad4b3d;
+  margin-bottom: 12px;
+}
+
+p {
+  font-size: clamp(15px, 2vw, 18px);
+  line-height: 1.65;
+}
+
+.hand {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+}
+
+.eyebrow {
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #c28a79;
+}
+
+.btn {
+  border: 2px solid var(--orange);
+  border-radius: 24px;
+  background: var(--orange);
+  color: white;
+  padding: 9px 26px;
+  min-width: 100px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 17px;
+  box-shadow: 0 3px 0 #bf4e31;
+  transition: transform .2s;
+}
+
+.btn:hover {
+  transform: translateY(-3px) rotate(-1deg);
+}
+
+.btn.outline {
+  background: #fffefa;
+  color: var(--orange);
+}
+
+.btn-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 17px;
+  margin-top: 18px;
+}
+
+.doodle {
+  font-size: clamp(90px, 15vw, 135px);
+  line-height: 1.2;
+  margin: 8px 0 17px;
+  filter: saturate(.8);
+  animation: bob 3s ease-in-out infinite;
+}
+
+.hearts {
+  position: absolute;
+  color: #e9a6a9;
+  font-size: 25px;
+  opacity: .65;
+  pointer-events: none;
+}
+
+.heart-a { left: 8%; top: 16%; transform: rotate(-15deg); }
+.heart-b { right: 9%; top: 26%; transform: rotate(12deg); }
+.heart-c { left: 15%; bottom: 13%; transform: rotate(13deg); }
+.heart-d { right: 14%; bottom: 12%; transform: rotate(-10deg); }
+
+.tiny {
+  color: #a88377;
+  font-size: 13px;
+  margin-top: 20px;
+}
+
+.retry-penguin {
+  font-size: 115px;
+  margin: 12px 0;
+  animation: wobble 1.5s infinite;
+}
+
+.choices {
+  width: min(100%, 630px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 25px;
+}
+
+.penguin-choice {
+  padding: 12px 4px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 16px;
+  color: var(--ink);
+  transition: transform .25s, background .25s;
+}
+
+.penguin-choice:hover {
+  transform: translateY(-6px);
+  background: #fdf0ed;
+}
+
+.penguin-art {
+  font-size: clamp(60px, 10vw, 91px);
+  display: block;
+  line-height: 1.3;
+  filter: saturate(.65);
+}
+
+.penguin-choice small {
+  display: block;
+  font-size: 14px;
+  color: #b15b4d;
+  margin-top: 6px;
+}
+
+.birthday-heading {
+  color: #c64f76;
+  font-size: clamp(36px, 7vw, 61px);
+  line-height: .98;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px #f5d4dd;
+}
+
+.birthday-art {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 3vw, 35px);
+  margin: 15px 0;
+}
+
+.birthday-penguin {
+  font-size: clamp(100px, 20vw, 170px);
+  line-height: 1.1;
+  animation: bob 3s infinite;
+}
+
+.side-art {
+  font-size: clamp(35px, 6vw, 62px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.click-heart {
+  position: absolute;
+  right: 5%;
+  top: 47%;
+  border: 1px solid #ecd9c6;
+  border-radius: 50%;
+  background: #fff3e5;
+  color: #a55a45;
+  width: 53px;
+  height: 53px;
+  font-size: 11px;
+  line-height: 1.05;
+  cursor: pointer;
+  transform: rotate(8deg);
+}
+
+.click-heart:hover { background: #ffe0e4; }
+
+.letter {
+  width: 100%;
+  max-width: 750px;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 24px;
+  padding: 22px;
+  background: #fffdf8;
+  border: 1px solid #efdcd7;
+  box-shadow: 0 4px 15px #ad887019;
+  text-align: left;
+}
+
+.letter-photo {
+  display: grid;
+  place-items: center;
+  min-height: 200px;
+  background: #f7e8e3;
+  font-size: 75px;
+  position: relative;
+  overflow: hidden;
+}
+
+.letter-photo img,
+.memory-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.upload-hint {
+  font-size: 12px;
+  text-align: center;
+  color: #9b796c;
+  margin: 5px 0 0;
+}
+
+.upload-label {
+  display: inline-block;
+  cursor: pointer;
+  border-bottom: 1px dashed #bd8577;
+  color: #a65c4b;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+input[type=file] { display: none; }
+
+.letter-copy h2 {
+  font-family: 'Caveat', cursive;
+  font-size: 37px;
+  margin-bottom: 8px;
+}
+
+.letter-copy p { font-size: 14px; line-height: 1.6; }
+
+.scrapbook {
+  width: min(100%, 720px);
+  padding: 23px;
+  background:
+    repeating-linear-gradient(0deg, #fffdf9, #fffdf9 28px, #f1e7e2 29px);
+  border: 7px solid #f3e2dc;
+  border-radius: 12px;
+  position: relative;
+}
+
+.scrapbook-title {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(39px, 6vw, 61px);
+  color: #8f8079;
+  margin: 0 0 12px;
+}
+
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 17px;
+  align-items: center;
+}
+
+.memory-card {
+  background: white;
+  padding: 7px 7px 12px;
+  box-shadow: 0 3px 8px #5b403016;
+  transform: rotate(-3deg);
+}
+
+.memory-card:nth-child(2) { transform: rotate(3deg); }
+.memory-card:nth-child(3) { transform: rotate(-2deg); }
+
+.memory-photo {
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #f7e7e1;
+  font-size: 49px;
+}
+
+.memory-card p {
+  font-size: 13px;
+  margin: 8px 0 0;
+  color: #927b72;
+}
+
+.scrapbook-note {
+  margin: 19px 0 0;
+  font-family: 'Caveat', cursive;
+  font-size: 28px;
+  color: #88736d;
+}
+
+.photo-heart {
+  width: 100%;
+  max-width: 730px;
+  min-height: 280px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+  background: radial-gradient(ellipse, #fae5eb 0, #fffdfb 65%);
+}
+
+.big-heart {
+  font-size: clamp(180px, 35vw, 310px);
+  line-height: 1;
+  color: #f2c7d2;
+  text-shadow: 0 4px 0 #e8aebd;
+}
+
+.heart-photo {
+  position: absolute;
+  width: 28%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 4px solid white;
+  border-radius: 45% 45% 40% 40%;
+  box-shadow: 0 3px 10px #4a282522;
+}
+
+.heart-photo.one { left: 12%; top: 18%; transform: rotate(-8deg); }
+.heart-photo.two { right: 12%; top: 18%; transform: rotate(8deg); }
+.heart-photo.three { left: 36%; bottom: 3%; transform: rotate(-3deg); }
+
+.question-title {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(44px, 8vw, 73px);
+  color: #bc4f43;
+  transform: rotate(-2deg);
+  margin-bottom: 6px;
+}
+
+.swirl {
+  font-family: 'Caveat', cursive;
+  font-size: 35px;
+  color: #a88780;
+  letter-spacing: 5px;
+}
+
+.two-choices {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 8vw, 85px);
+  margin: 15px 0;
+}
+
+.two-choices button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: transform .25s, opacity .25s;
+}
+
+.two-choices button:hover { transform: scale(1.08); }
+
+.two-choices .penguin-art { font-size: clamp(95px, 16vw, 140px); }
+
+.hug-title {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(35px, 6vw, 57px);
+  color: #ad4b3d;
+  margin: 0;
+}
+
+.hug-characters {
+  font-size: clamp(85px, 16vw, 145px);
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  margin: 14px 0;
+}
+
+.miss-you {
+  color: #b84e3d;
+  font-size: clamp(40px, 7vw, 67px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 2px;
+}
+
+.final-stage {
+  min-height: 510px;
+  width: 100%;
+  padding: 20px;
+  background: #fffdf9;
+  border: 12px solid #f46c32;
+  box-shadow: inset 0 0 0 7px #f7b7a0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.final-love {
+  color: #d9816a;
+  font-size: clamp(60px, 12vw, 112px);
+  font-weight: 800;
+  letter-spacing: 2px;
+  line-height: 1.15;
+  min-height: 1.2em;
+}
+
+.final-love span {
+  display: inline-block;
+  animation: drawIn .35s ease both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+@keyframes drawIn {
+  from { opacity: 0; transform: scale(.7); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 560px) {
+  body { padding: 8px; }
+  .stage, .screen { min-height: 500px; }
+  .screen { padding: 28px 15px; }
+  .choices { gap: 2px; }
+  .penguin-choice small { font-size: 11px; }
+  .letter { grid-template-columns: 1fr; padding: 14px; gap: 12px; }
+  .letter-photo { min-height: 155px; }
+  .letter-copy p { font-size: 13px; }
+  .click-heart { right: 3%; top: 3%; }
+  .memory-grid { gap: 8px; }
+  .scrapbook { padding: 12px; }
+  .memory-card { padding: 4px 4px 8px; }
+  .memory-card p { font-size: 10px; }
+  .photo-heart { min-height: 220px; }
+  .heart-photo { width: 29%; }
+  .final-stage { min-height: 430px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* Birthday screen — soft pastel paper look */
+.birthday-screen {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 40%, #fffefb 0%, #fffdf4 65%, #fff5ed 100%);
+}
+
+/* Birthday lettering */
+.birthday-screen .birthday-heading {
+  position: relative;
+  z-index: 1;
+  color: #d84e72;
+  text-shadow: 1px 2px 0 #f7d6d9;
+  animation: birthdayTitle 1s ease-out both;
+}
+
+/* Main illustration gently floats */
+.birthday-screen .birthday-penguin {
+  display: inline-block;
+  transform-origin: center bottom;
+  animation: penguinFloat 3s ease-in-out infinite;
+}
+
+/* Side decorations move gently */
+.birthday-screen .side-art span {
+  display: inline-block;
+  animation: decorationFloat 2.8s ease-in-out infinite;
+}
+
+.birthday-screen .side-art span:nth-child(2) {
+  animation-delay: 0.7s;
+}
+
+/* Sparkles twinkle */
+.birthday-screen .birthday-sparkle {
+  position: absolute;
+  color: #e9b83e;
+  animation: sparkleTwinkle 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.birthday-screen .sparkle-a {
+  top: 14%;
+  left: 12%;
+  font-size: 27px;
+}
+
+.birthday-screen .sparkle-b {
+  top: 23%;
+  right: 14%;
+  font-size: 23px;
+  animation-delay: 0.6s;
+}
+
+.birthday-screen .sparkle-c {
+  bottom: 25%;
+  left: 17%;
+  font-size: 21px;
+  animation-delay: 1s;
+}
+
+.birthday-screen .sparkle-d {
+  bottom: 30%;
+  right: 12%;
+  font-size: 28px;
+  animation-delay: 1.4s;
+}
+
+/* Wish text appears softly */
+.birthday-screen .birthday-wish {
+  animation: wishAppear 1.4s ease-out both;
+}
+
+/* Animation definitions */
+@keyframes penguinFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(-2deg); }
+}
+
+@keyframes decorationFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+@keyframes sparkleTwinkle {
+  0%, 100% { opacity: 0.35; transform: scale(0.8) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(15deg); }
+}
+
+@keyframes birthdayTitle {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes wishAppear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .birthday-screen .birthday-penguin,
+  .birthday-screen .side-art span,
+  .birthday-screen .birthday-sparkle,
+  .birthday-screen .birthday-heading,
+  .birthday-screen .birthday-wish {
+    animation: none;
+  }
+}
+
+
+.birthday-screen {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 45%, #fffefb 0%, #fffdf7 72%, #f9eee9 100%);
+}
+
+/* Make the birthday artwork visibly move */
+#birthday .birthday-heading {
+  animation: birthdayPop 1s ease-out both;
+}
+
+#birthday .birthday-penguin {
+  display: inline-block;
+  animation: penguinBounce 1.8s ease-in-out infinite;
+}
+
+#birthday .hearts {
+  display: inline-block;
+  animation: starTwinkle 1.2s ease-in-out infinite alternate;
+}
+
+#birthday .heart-b {
+  animation-delay: 0.4s;
+}
+
+#birthday .heart-c {
+  animation-delay: 0.8s;
+}
+
+#birthday .side-art span {
+  display: inline-block;
+  animation: giftFloat 2s ease-in-out infinite;
+}
+
+#birthday .side-art span:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+@keyframes birthdayPop {
+  from {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes penguinBounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-12px) rotate(3deg);
+  }
+}
+
+@keyframes starTwinkle {
+  from {
+    opacity: 0.35;
+    transform: scale(0.8) rotate(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.25) rotate(15deg);
+  }
+}
+
+@keyframes giftFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+
+/* Birthday illustration sizing and motion */
+#birthday.birthday-screen {
+  position: relative;
+  overflow: hidden;
+  background: #fffaf3;
+}
+
+#birthday .birthday-illustration {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  margin: 0 auto;
+  animation: birthdayArtworkFloat 4s ease-in-out infinite;
+}
+
+@keyframes birthdayArtworkFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Keep the Next button above the artwork */
+#birthday .click-heart {
+  position: absolute;
+  z-index: 5;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#birthday .birthday-sparkle {
+  z-index: 2;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  #birthday .birthday-illustration {
+    max-height: 75vh;
+  }
+
+  #birthday .click-heart {
+    bottom: 8px;
+  }
+}
+
+/* ===== PLATONIC SCRAPBOOK DESIGN ===== */
+
+
+#beautiful.scrapbook-screen {
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 35px 18px;
+  text-align: center;
+  background-color: #f9dfe3;
+  background-image:
+    linear-gradient(90deg, #ffffff55 50%, transparent 50%),
+    linear-gradient(#ffffff55 50%, transparent 50%);
+  background-size: 60px 60px;
+}
+
+#beautiful .scrapbook {
+  position: relative;
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 30px 28px 24px;
+  box-sizing: border-box;
+  background-color: #fffaf0;
+  background-image: repeating-linear-gradient(
+    transparent 0px,
+    transparent 35px,
+    #e9dcd055 36px,
+    transparent 37px
+  );
+  border: 2px solid #e4bfc0;
+  border-radius: 22px;
+  box-shadow: 0 7px 0 #edc7ce, 0 12px 30px #946d6d20;
+}
+
+#beautiful .scrapbook-camera {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  font-size: 42px;
+  transform: rotate(-12deg);
+}
+
+#beautiful .scrapbook-title {
+  margin: 5px 0 4px;
+  color: #78605d;
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  font-size: clamp(36px, 6vw, 60px);
+  font-weight: 500;
+}
+
+#beautiful .scrapbook-subtitle {
+  margin: 0 0 28px;
+  color: #aa8184;
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  font-size: 15px;
+}
+
+#beautiful .scrapbook-doodle {
+  position: absolute;
+  pointer-events: none;
+}
+
+#beautiful .doodle-star {
+  top: 16%;
+  right: 8%;
+  color: #e8bd50;
+  font-size: 32px;
+}
+
+#beautiful .doodle-flower {
+  top: 42%;
+  left: 3%;
+  color: #d88e9e;
+  font-size: 30px;
+}
+
+#beautiful .memory-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: start;
+  gap: 24px 16px;
+  margin: 22px 0 12px;
+}
+
+#beautiful .memory-card {
+  position: relative;
+  min-width: 0;
+  text-align: center;
+}
+
+/* Arrange five photos in a scrapbook collage */
+#beautiful .photo-one {
+  grid-column: 1 / span 2;
+  transform: rotate(-4deg);
+}
+
+#beautiful .photo-two {
+  grid-column: 5 / span 2;
+  transform: rotate(3deg);
+}
+
+#beautiful .photo-three {
+  grid-column: 3 / span 2;
+  margin-top: -8px;
+  transform: rotate(-2deg);
+}
+
+#beautiful .photo-four {
+  grid-column: 1 / span 2;
+  transform: rotate(3deg);
+}
+
+#beautiful .photo-five {
+  grid-column: 5 / span 2;
+  transform: rotate(-3deg);
+}
+
+/* Normal rectangular Polaroid-style frames */
+#beautiful .memory-photo.rectangle-photo {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  box-sizing: border-box;
+  cursor: pointer;
+  background: #f2e6df;
+  border: 7px solid #fff;
+  border-bottom-width: 15px;
+  border-radius: 2px;
+  box-shadow: 0 2px 7px #8c696933;
+  transition: transform 0.25s ease;
+}
+
+#beautiful .memory-photo.rectangle-photo:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+#beautiful .memory-photo.rectangle-photo span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  pointer-events: none;
+}
+
+#beautiful .memory-photo.rectangle-photo input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+#beautiful .memory-card p {
+  margin: 10px 0;
+  color: #785f5b;
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  font-size: clamp(12px, 2vw, 17px);
+}
+
+#beautiful .scrapbook-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+#beautiful .scrapbook-sticker,
+#beautiful .scrapbook-flower {
+  font-size: 30px;
+}
+
+#beautiful .scrapbook-note {
+  margin: 0;
+  color: #846c66;
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  font-size: clamp(14px, 2.5vw, 20px);
+}
+
+#beautiful .upload-hint {
+  margin: 14px 0 0;
+  color: #aa8e88;
+  font-size: 12px;
+}
+
+@media (max-width: 500px) {
+  #beautiful.scrapbook-screen {
+    padding: 25px 10px;
+  }
+
+  #beautiful .scrapbook {
+    padding: 28px 13px 20px;
+  }
+
+  #beautiful .scrapbook-camera {
+    font-size: 30px;
+  }
+
+  #beautiful .memory-grid {
+    gap: 18px 8px;
+  }
+
+  #beautiful .memory-photo.rectangle-photo {
+    border-width: 4px;
+    border-bottom-width: 10px;
+  }
+}
+
+
+#beautiful .scrapbook {
+  position: relative;
+  width: 100%;
+  max-width: 470px;
+  margin: 0 auto;
+  padding: 25px 18px 18px;
+  box-sizing: border-box;
+  background: #fffdf9;
+  border: 2px solid #e8cdca;
+  border-radius: 8px;
+  box-shadow: 0 5px 0 #f2dddd, 0 10px 25px #b77d7d18;
+}
+
+/* Camera sticker */
+#beautiful .scrapbook-camera {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  z-index: 2;
+  font-size: 34px;
+  transform: rotate(-12deg);
+}
+
+/* Handwritten-style title */
+#beautiful .scrapbook-title {
+  margin: 10px 0 4px;
+  color: #77706c;
+  text-align: center;
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  font-size: clamp(32px, 7vw, 46px);
+  font-weight: 500;
+}
+
+#beautiful .scrapbook-subtitle {
+  margin-bottom: 18px;
+  color: #a58a85;
+  text-align: center;
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  font-size: 15px;
+}
+
+/* Scrapbook doodles */
+#beautiful .scrapbook-doodle {
+  position: absolute;
+  pointer-events: none;
+}
+
+#beautiful .doodle-star {
+  top: 21%;
+  right: 8%;
+  color: #e9bd50;
+  font-size: 26px;
+}
+
+#beautiful .doodle-flower {
+  top: 49%;
+  left: 4%;
+  color: #e2a2ad;
+  font-size: 27px;
+}
+
+/* Three-column scrapbook layout */
+#beautiful .memory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+#beautiful .memory-card {
+  min-width: 0;
+  text-align: center;
+  position: relative;
+}
+
+#beautiful .memory-card:nth-child(2) {
+  margin-top: 35px;
+}
+
+/* Rectangular photo frames */
+#beautiful .memory-photo.rectangle-photo {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  box-sizing: border-box;
+  cursor: pointer;
+  background: #f4e9e5;
+  border: 5px solid #fff;
+  outline: 1px solid #ddc7c2;
+  border-radius: 3px;
+  box-shadow: 0 3px 7px #947b7525;
+  transform: rotate(-2deg);
+  transition: transform 0.25s ease;
+}
+
+#beautiful .memory-card:nth-child(2) .memory-decoration {
+  margin-top: 25px;
+}
+
+#beautiful .memory-card:nth-child(3) .memory-photo {
+  transform: rotate(2deg);
+}
+
+#beautiful .memory-photo.rectangle-photo:hover {
+  transform: rotate(0deg) translateY(-3px);
+}
+
+/* Photo upload controls */
+#beautiful .memory-photo.rectangle-photo span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 25px;
+  pointer-events: none;
+}
+
+#beautiful .memory-photo.rectangle-photo input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Photo captions */
+#beautiful .memory-card p {
+  margin: 10px 0 3px;
+  color: #756661;
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  font-size: clamp(11px, 2.8vw, 15px);
+}
+
+#beautiful .memory-decoration {
+  color: #e0b65a;
+  font-size: 43px;
+  line-height: 1.5;
+}
+
+#beautiful .memory-caption-doodle {
+  color: #d69da3;
+  font-size: 22px;
+}
+
+/* Bottom note */
+#beautiful .scrapbook-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+#beautiful .scrapbook-sticker {
+  flex-shrink: 0;
+  font-size: 29px;
+  transform: rotate(-10deg);
+}
+
+#beautiful .scrapbook-note {
+  color: #897873;
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  text-align: center;
+  font-size: clamp(13px, 3vw, 17px);
+  line-height: 1.5;
+}
+
+#beautiful .scrapbook-flower {
+  flex-shrink: 0;
+  color: #d7b343;
+  font-size: 27px;
+}
+
+#beautiful .upload-hint {
+  margin: 12px 0 0;
+  color: #a99490;
+  font-size: 11px;
+  text-align: center;
+}
+
+/* Smooth bottom-to-top reveal */
+#beautiful .scrapbook-reveal {
+  opacity: 0;
+  animation: scrapbookRise 0.8s cubic-bezier(.2,.75,.25,1) forwards;
+}
+
+#beautiful .reveal-1 { animation-delay: 0.05s; }
+#beautiful .reveal-2 { animation-delay: 0.20s; }
+#beautiful .reveal-3 { animation-delay: 0.38s; }
+#beautiful .reveal-4 { animation-delay: 0.56s; }
+#beautiful .reveal-5 { animation-delay: 0.74s; }
+#beautiful .reveal-6 { animation-delay: 0.92s; }
+
+@keyframes scrapbookRise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 380px) {
+  #beautiful .scrapbook {
+    padding: 22px 12px 15px;
+  }
+
+  #beautiful .memory-grid {
+    gap: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #beautiful .scrapbook-reveal {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+/* Clarence birthday surprise */
+#surprise.clarence-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 16px 12px;
+  background: linear-gradient(
+    to bottom,
+    #fff4f7 0%,
+    #ffe5ed 55%,
+    #fbd5e2 100%
+  );
+}
+
+/* Top title */
+#surprise .clarence-title,
+#surprise .clarence-birthday {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  text-align: center;
+  font-family: "Trebuchet MS", "Comic Sans MS", cursive;
+  font-weight: 900;
+  color: #d9577b;
+  text-shadow:
+    2px 2px 0 #fff,
+    4px 4px 0 #f3c1d0;
+}
+
+#surprise .clarence-title,
+#surprise .clarence-birthday {
+  position: relative;
+  z-index: 2;
+  color: #d9577b;
+  text-align: center;
+  font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+  font-weight: 900;
+  text-shadow: 2px 2px white;
+  letter-spacing: 1px;
+}
+/* Clarence rises from the bottom */
+#surprise .clarence-character {
+  position: absolute;
+  inset: 75px 0 90px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: clarenceRise 1.5s ease-out both;
+}
+
+#surprise .clarence-character img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 90%;
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+/* Bottom birthday message */
+#surprise .clarence-birthday {
+  margin-top: auto;
+  padding-bottom: 12px;
+  font-size: clamp(34px, 7vw, 54px);
+  line-height: 1.15;
+  animation: clarenceTextIn 1s ease-out 0.7s both;
+}
+
+/* Entrance animations */
+@keyframes clarenceRise {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes clarenceTextIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #surprise .clarence-character,
+  #surprise .clarence-birthday {
+    animation: none;
+  }
+}
+
+#surprise .back-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 5;
+}
+/* Farewell message page */
+#farewell.farewell-screen {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 75px 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fff4f7, #ffe1eb, #fff8e8);
+}
+
+#farewell .farewell-card {
+  width: 100%;
+  max-width: 520px;
+  box-sizing: border-box;
+  padding: 35px 25px;
+  border: 3px dashed #f0a5bb;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 8px 25px rgba(190, 100, 130, 0.12);
+  text-align: center;
+}
+
+#farewell h1 {
+  color: #d9577b;
+  font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+  font-size: clamp(28px, 6vw, 40px);
+  margin: 15px 0 22px;
+}
+
+#farewell p {
+  color: #765361;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 17px;
+  line-height: 1.8;
+  margin: 16px 0;
+}
+
+#farewell .farewell-decoration {
+  color: #d9577b;
+  font-size: 22px;
+  margin: 12px 0;
+}
+/* Keep the fourth gift centered on the second row */
+#choose .choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-items: center;
+  align-items: center;
+}
+
+#choose .choices .penguin-choice:nth-child(4) {
+  grid-column: 2;
+}
+/* Birthday letter: photo and message together */
+#letter .letter {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: stretch;
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#letter .letter > div:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+#letter .letter-photo {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  margin: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+#letter .letter-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#letter .letter-copy {
+  min-width: 0;
+  align-self: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  #letter .letter {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+
+  #letter .letter-photo {
+    height: 200px;
+  }
+
+  #letter .letter-copy {
+    padding: 12px;
+  }
+}
+.retry-penguin-gif {
+  display: block;
+  width: clamp(150px, 30vw, 240px);
+  height: 200px;
+  object-fit: contain;
+  margin: 15px auto 20px;
+}
+
+/* Soft pink titles throughout the website */
+h1,
+h2,
+h3 {
+  font-family: "Skulderklap", cursive;
+  color: #e58b9b;
+}
+#gift h1,
+#gift h2,
+#gift p,
+#gift .btn {
+  font-family: "Skulderklap", cursive;
+}
+
+/* Retry page font */
+#retry h1,
+#retry h2,
+#retry p,
+#retry .btn {
+  font-family: "Skulderklap", cursive;
+}
+
+/* Floating music button */
+
+/* Speaker button inside the main card */
+.music-toggle {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 1000;
+
+  width: 42px;
+  height: 42px;
+  border: 1px solid #e9ddd1;
+  border-radius: 50%;
+  background: #fffaf5;
+  box-shadow: 0 3px 10px #72574720;
+
+  font-size: 19px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.music-toggle:hover {
+  transform: scale(1.1);
+}
+
+.stage {
+  position: relative;
+}
+
+.screen > .back-btn {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 1000;
+}
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Skulderklap&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+  
+<!-- Background music -->
+<audio id="bgMusic" loop>
+  <source src="birthday-music.mp3" type="audio/mpeg">
+</audio>
+
+
+
+<main class="stage">
+<button id="musicToggle" class="music-toggle"
+        onclick="toggleMusic()"
+        aria-label="Turn music on"
+        title="Toggle music">🔇</button>
+
+  <!-- 1. ACCEPT THE GIFT -->
+  <section id="gift" class="screen">
+    <span class="hearts heart-a">♡</span>
+    <span class="hearts heart-b">♡</span>
+    <h1 style="color:#26211e; letter-spacing:1px;">PLS ACCEPT THE GIFT</h1>
+    <img
+  src="landing-penguin.gif"
+  alt="Cute animated penguin"
+  class="landing-penguin-gif"
+>
+    <div class="btn-row">
+      <button class="btn" onclick="startMusic(); go('choose')">YES</button>
+      <button class="btn" onclick="go('retry')">NO</button>
+    </div>
+  </section>
+
+  <!-- 2. NO / TRY AGAIN -->
+  <section id="retry" class="screen hidden">
+    <h1 style="color:#26211e;">WHY DID YOU CLICK NO! 😭</h1>
+    <img
+  src="retry-penguin.gif"
+  alt="Cute animated penguin"
+  class="retry-penguin-gif"
+>
+    <button class="btn" onclick="go('gift')">TRY AGAIN</button>
+  </section>
+
+  <!-- 3. THREE PENGUINS WITH GIFTS -->
+  <section id="choose" class="screen hidden">
+    <h2>Choose a penguin</h2>
+    <h2 style="font-size:clamp(21px,4vw,31px);">
+      Each one has something special to say
+    </h2>
+    
+    
+<div class="choices">
+
+  <!-- Gift 1: Birthday illustration -->
+  <button class="penguin-choice" onclick="go('birthday')" aria-label="Open birthday gift">
+    <img src="gift-penguins.gif" alt="" class="gift-penguin-gif">
+  </button>
+
+  <!-- Gift 2: Scrapbook -->
+  <button class="penguin-choice" onclick="go('beautiful')" aria-label="Open scrapbook gift">
+    <img src="gift-penguins.gif" alt="" class="gift-penguin-gif">
+  </button>
+
+  <!-- Gift 3: Clarence surprise -->
+  <button class="penguin-choice" onclick="go('surprise')" aria-label="Open Clarence surprise">
+    <img src="gift-penguins.gif" alt="" class="gift-penguin-gif">
+  </button>
+
+  <!-- Gift 4: Farewell message -->
+  <button class="penguin-choice" onclick="go('farewell')" aria-label="Open farewell message">
+    <img src="letter-penguin.gif" alt="" class="letter-penguin" style="width: 100px; height: 100px;">
+  </button>
+
+</div>
+  </section>
+
+  <!-- 4. BIRTHDAY ILLUSTRATION -->
+  
+<!-- 4. BIRTHDAY ILLUSTRATION -->
+
+<!-- 4. BIRTHDAY ILLUSTRATION -->
+<section id="birthday" class="screen hidden birthday-screen">
+
+  <span class="birthday-sparkle sparkle-a">✧</span>
+  <span class="birthday-sparkle sparkle-b">✦</span>
+  <span class="birthday-sparkle sparkle-c">✧</span>
+  <span class="birthday-sparkle sparkle-d">✦</span>
+
+  <img
+    src="birthday-party-animated.gif"
+    alt="Pastel Happy Birthday illustration with a penguin holding a cake"
+    class="birthday-illustration"
+  >
+
+</section>
+
+
+
+  <!-- 5. BIRTHDAY LETTER -->
+  <section id="letter" class="screen hidden">
+    <div class="letter">
+      <div>
+        <div class="letter-photo" id="birthdayPhoto">
+          <span>💗</span>
+        </div>
+        <label class="upload-label">
+          Add birthday photo
+          <input type="file" accept="image/*" onchange="loadPhoto(event,'birthdayPhoto')">
+        </label>
+        <p class="upload-hint">Choose a photo from your computer</p>
+        <p class="hand" style="font-size:24px;">♡ My favourite person ♡</p>
+      </div>
+      <div class="letter-copy">
+        <h2>HAPPY BIRTHDAY</h2>
+        <p>Happy birthday to you! ♡</p>
+        <p>Today is your special day, and I hope it brings you all the happiness you deserve.</p>
+        <p>You make ordinary moments feel magical. Your smile, your laugh, and all the little things about you mean more to me than words can explain.</p>
+        <p>I hope this year brings you beautiful memories, endless smiles, and everything your heart wishes for.</p>
+        <p class="hand" style="font-size:25px;">With all my love ♡</p>
+      </div>
+    </div>
+    <button class="click-heart" onclick="go('beautiful')">CLICK<br>ME</button>
+    <button class="btn" style="margin-top:17px;" onclick="go('beautiful')">Next ♡</button>
+  </section>
+
+  
+<!-- 6. BEAUTIFUL SCRAPBOOK -->
+
+<section id="beautiful" class="screen hidden scrapbook-screen">
+  <div class="scrapbook">
+
+    <div class="scrapbook-camera">📸</div>
+
+    <h1 class="scrapbook-title">Scarpbook</h1>
+    <p class="scrapbook-subtitle">A little collection of happy moments ✨</p>
+
+    <span class="scrapbook-doodle doodle-star">✦</span>
+    <span class="scrapbook-doodle doodle-flower">✿</span>
+
+    <div class="memory-grid">
+
+      <div class="memory-card photo-one">
+        <div class="memory-photo rectangle-photo" id="memory1">
+  <img src="pic1.jpeg" alt="Birthday Star">
+</div>
+        <p>Birthday Star ✨</p>
+      </div>
+
+      <div class="memory-card photo-two">
+       <div class="memory-photo rectangle-photo" id="memory1">
+  <img src="pic2.jpeg" alt="Birthday Star">
+</div>
+        <p>Good Times ☀️</p>
+      </div>
+
+      <div class="memory-card photo-three">
+        <div class="memory-photo rectangle-photo" id="memory1">
+  <img src="pic5.jpg" alt="Birthday Star">
+</div>
+        <p>Amazing You 🌼</p>
+      </div>
+
+      <div class="memory-card photo-four">
+        <div class="memory-photo rectangle-photo" id="memory1">
+  <img src="pic3.jpeg" alt="Birthday Star">
+</div>
+        <p>Best Memories ✨</p>
+      </div>
+
+      <div class="memory-card photo-five">
+        <div class="memory-photo rectangle-photo" id="memory1">
+  <img src="pic4.jpeg" alt="Birthday Star">
+</div>
+        <p>Keep Smiling 🌷</p>
+      </div>
+
+    </div>
+
+    <div class="scrapbook-bottom">
+      <span class="scrapbook-sticker">🌼</span>
+      
+      <span class="scrapbook-flower">✿</span>
+    </div>
+
+
+  </div>
+
+</section>
+
+
+
+  <!-- 7. WILL YOU BE MINE -->
+  <section id="proposal" class="screen hidden">
+    <span class="hearts heart-a">✧</span>
+    <span class="hearts heart-b">♡</span>
+    <h1 class="question-title">Will you be mine?</h1>
+    <div class="photo-heart">
+      <div class="big-heart">♥</div>
+      <label class="heart-photo one" id="heartPhoto1"
+        style="display:grid;place-items:center;background:#f3d9dc;font-size:30px;cursor:pointer;">
+        📷
+        <input type="file" accept="image/*" onchange="loadPhoto(event,'heartPhoto1')">
+      </label>
+      <label class="heart-photo two" id="heartPhoto2"
+        style="display:grid;place-items:center;background:#f3d9dc;font-size:30px;cursor:pointer;">
+        📷
+        <input type="file" accept="image/*" onchange="loadPhoto(event,'heartPhoto2')">
+      </label>
+      <label class="heart-photo three" id="heartPhoto3"
+        style="display:grid;place-items:center;background:#f3d9dc;font-size:30px;cursor:pointer;">
+        📷
+        <input type="file" accept="image/*" onchange="loadPhoto(event,'heartPhoto3')">
+      </label>
+    </div>
+    <p class="hand" style="font-size:26px;">11.05.2026</p>
+    <p class="upload-hint">Click the little hearts to add your photos.</p>
+    <button class="click-heart" onclick="go('secondChoose')">CLICK<br>ME</button>
+  </section>
+
+  <!-- 8. SECOND CHARACTER CHOICE -->
+  <section id="secondChoose" class="screen hidden">
+    <h2>Choose a penguin</h2>
+    <div class="two-choices">
+      <button onclick="selectHug('🐻')">
+        <span class="penguin-art">🐻</span>
+      </button>
+      <button onclick="selectHug('🐰')">
+        <span class="penguin-art">🐰</span>
+      </button>
+    </div>
+    <p class="hand" style="font-size:24px;">Choose your hug ♡</p>
+  </section>
+
+  <!-- 9. VIRTUAL HUG -->
+  <section id="hug" class="screen hidden">
+    <h2 class="hug-title">Virtual hug for ya!</h2>
+    <div class="hug-characters">
+      <span id="hugCharacter">🐻</span><span>🫂</span>
+    </div>
+    <div class="miss-you">I MISS YOU</div>
+    <button class="click-heart" onclick="go('final')">CLICK<br>ME</button>
+  </section>
+
+  <!-- 10. I LOVE YOU ENDING -->
+  <section id="final" class="screen hidden" style="padding:0;">
+    <div class="final-stage">
+      <div id="finalText" class="final-love"></div>
+    </div>
+  </section>
+
+  <!-- Clarence Birthday Surprise -->
+<section id="surprise" class="screen hidden clarence-screen">
+     <button class="back-btn" onclick="go('choose')">
+    ← Back to gifts
+  </button>
+
+  <h1 class="clarence-title">Clarence also wishes</h1>
+
+  <div class="clarence-character">
+    <img src="clarence.jpg" alt="Clarence celebrating a birthday">
+  </div>
+
+  <h1 class="clarence-birthday">Happy Birthday!</h1>
+
+</section>
+<section id="farewell" class="screen hidden farewell-screen">
+
+
+  <div class="farewell-card">
+    <div class="farewell-decoration">🌷 💌 🌷</div>
+
+    <h1>Last thing to say...</h1>
+
+    <p>
+      I’ve genuinely had a lot of fun working with you this past year. Thank you for all 
+      the laughs, the random conversations, and the little moments that somehow made even 
+      ordinary workdays a lot less ordinary. I’m really glad our paths crossed.
+
+    </p>
+
+    <p>
+      It’s funny how you meet so many people along the way, but every now and then, someone
+       makes the everyday stuff a little more memorable without even trying. 
+       You’ve been one of those people for me, and I think I’ll look back on this time 
+       with a smile because of that.
+ 
+    </p>
+
+    <p>
+      Wishing you all the best for the year ahead. I hope it brings you lots of happiness, 
+      exciting opportunities, and plenty of good moments with your family and friends.
+    </p>
+
+    <p>
+      And if you do end up becoming a psychiatrist, I’m definitely booking an appointment. 
+      Just to check whether I have ADHD or whether I’m simply like this. 😂
+    </p>
+
+    <div class="farewell-decoration">✨ All the best! ✨</div>
+  </div>
+</main>
+
+<script>
+const screenIds = [
+  'gift', 'retry', 'choose', 'birthday', 'letter',
+  'beautiful', 'proposal', 'secondChoose', 'hug', 'final',
+  'surprise', 'farewell'
+];
+
+
+const backTargets = {
+  retry: 'gift',
+  choose: 'gift',
+  birthday: 'choose',
+  letter: 'birthday',
+  beautiful: 'choose',
+  proposal: 'beautiful',
+  secondChoose: 'proposal',
+  hug: 'secondChoose',
+    final: 'hug',
+  surprise: 'choose',
+  farewell: 'choose'
+};
+
+function go(id) {
+  screenIds.forEach(screenId => {
+    document.getElementById(screenId).classList.add('hidden');
+  });
+
+  const screen = document.getElementById(id);
+  screen.classList.remove('hidden');
+
+  // Remove any old Back button before adding a new one.
+  const oldBackButton = screen.querySelector('.back-btn');
+  if (oldBackButton) {
+    oldBackButton.remove();
+  }
+
+  // Add a Back button to every screen except the opening screen.
+  if (backTargets[id]) {
+    const backButton = document.createElement('button');
+
+    backButton.type = 'button';
+    backButton.className = 'back-btn';
+    backButton.textContent = '← Back';
+
+    backButton.onclick = function () {
+      go(backTargets[id]);
+    };
+
+    screen.appendChild(backButton);
+  }
+
+  // Replay the screen entrance animation.
+  screen.style.animation = 'none';
+  void screen.offsetWidth;
+  screen.style.animation = '';
+
+  // Replay the final message animation when needed.
+  if (id === 'final') {
+    animateLove();
+  }
+}
+
+
+function selectHug(character) {
+  document.getElementById('hugCharacter').textContent = character;
+  go('hug');
+}
+
+function loadPhoto(event, targetId) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    alert('Please choose an image file.');
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function() {
+    const target = document.getElementById(targetId);
+    const oldImage = target.querySelector('img');
+
+    if (oldImage) oldImage.remove();
+
+    const img = document.createElement('img');
+    img.src = reader.result;
+    img.alt = 'Your chosen photo';
+    target.appendChild(img);
+  };
+
+  reader.readAsDataURL(file);
+}
+
+let loveTimer;
+
+function animateLove() {
+  clearInterval(loveTimer);
+
+  const target = document.getElementById('finalText');
+  target.textContent = '';
+
+  const message = 'I LOVE YOU';
+  let index = 0;
+
+  loveTimer = setInterval(() => {
+    if (index >= message.length) {
+      clearInterval(loveTimer);
+      return;
+    }
+
+    const letter = document.createElement('span');
+    letter.textContent = message[index] === ' ' ? '\u00a0' : message[index];
+    target.appendChild(letter);
+    index++;
+  }, 220);
+}
+
+// Background music controls
+const bgMusic = document.getElementById("bgMusic");
+const musicToggle = document.getElementById("musicToggle");
+
+let musicPlaying = false;
+let musicManuallyStopped = false;
+
+bgMusic.volume = 0.4;
+
+function updateMusicButton() {
+  musicToggle.textContent = musicPlaying ? "🔊" : "🔇";
+}
+
+function startMusic() {
+  bgMusic.muted = false;
+
+  bgMusic.play()
+    .then(() => {
+      musicPlaying = true;
+      musicManuallyStopped = false;
+      updateMusicButton();
+    })
+    .catch((error) => {
+      console.log("Music could not start:", error);
+      musicPlaying = false;
+      updateMusicButton();
+    });
+}
+
+function toggleMusic() {
+  if (musicPlaying) {
+    bgMusic.pause();
+    musicPlaying = false;
+    musicManuallyStopped = true;
+    updateMusicButton();
+  } else {
+    musicManuallyStopped = false;
+    startMusic();
+  }
+}
+
+// Attempt autoplay
+startMusic();
+
+
+</script>
+<!-- Farewell Message -->
+<section id="farewell" class="screen hidden farewell-screen">
+
+
+  <div class="farewell-card">
+    <div class="farewell-decoration">🌷 💌 🌷</div>
+
+    <h1>Last thing to say...</h1>
+
+    <p>
+      I’ve had so much fun working with you over the last year! Thank you for the great 
+      memories, the constant laughs, and all the moments that made the work worth it lol.
+    </p>
+
+    <p>
+      Wishing you the absolute best for the year ahead. I hope it’s filled with happiness, 
+      exciting new opportunities, and wonderful times with your family and friends. If you do
+      become a psychratrist I will book an appointment to check if i have adhd. 
+    </p>
+
+    <div class="farewell-decoration">✨ All the best! ✨</div>
+  </div>
+
+</section>
+</body>
+</html>
